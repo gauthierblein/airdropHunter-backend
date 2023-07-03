@@ -21,11 +21,10 @@ dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const port = process.env.PORT || 3000 ;
 
 // Use Helmet!
 app.use(
-  helmet({crossOriginEmbedderPolicy: false})
+  helmet({crossOriginEmbedderPolicy: false, crossOriginResourcePolicy: false})
 );
 
 // CORS configuration
@@ -62,11 +61,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() =>
-    app.listen(port, () =>
-      console.log(`Listening at ${port}`)
-    )
-  ) .catch((error) => console.log(error));
+
+    
 
 
 
@@ -75,7 +71,11 @@ app.use('/', postRoute)
 app.use('/', userRoute)
 app.use('/', airdropRoute)
 
-
+/* LISTEN TO PORT */
+const port = process.env.PORT || 3000 ;
+app.listen(port, () =>
+      console.log(`Listening at ${port}`)
+    )
 
 
 
